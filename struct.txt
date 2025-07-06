@@ -1,0 +1,28 @@
+lawgpt-rag/
+├── backend/
+│   ├── main.py               # FastAPI app (REST + /rag endpoint)
+│   ├── ingest.py             # Script: load PDFs → chunk → embed → push to Qdrant
+│   ├── rag_chain.py          # LangChain RAG chain config (retriever + LLM)
+│   ├── requirements.txt      # Python dependencies
+│   └── utils.py              # Helper functions (loaders, cleaning)
+│
+├── knowledge_base/          # Your PDFs & legal docs
+│   ├── bns_code.pdf
+│   ├── ipc_code.pdf
+│   └── judgments.pdf
+│
+├── README.md
+└── architecture.png         # Diagram
+_______________________________________________
+[Frontend (React/Streamlit)]
+          |
+          v
+    [FastAPI backend]
+        |       |
+        |    /stream
+        |       |
+        v       v
+ [LangChain RAG chain]    ->  [Ollama LLM: DeepSeek-R1]
+        |
+        v
+ [Qdrant Cloud Vector DB]
