@@ -4,6 +4,7 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_huggingface import HuggingFaceEmbeddings
 from qdrant_client import QdrantClient
 from dotenv import load_dotenv
+from prompts.prompt import BEST_LAWYER_PROMPT
 import os
 
 load_dotenv()
@@ -25,8 +26,9 @@ vector_store = QdrantVectorStore(
 
 llm = OllamaLLM(model="deepseek-r1")
 
+# Select prompt dynamically
 prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a senior law consultant. Answer precisely, formally, and cite sections."),
+    ("system", BEST_LAWYER_PROMPT),
     ("human", "{question}")
 ])
 
