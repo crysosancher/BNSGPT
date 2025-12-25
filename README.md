@@ -321,31 +321,41 @@ uvicorn main:app --reload --port 8080
 
 ### Changing the Embedding Model
 
-Edit `ingest.py` and `rag_chain.py`:
+Edit `ingest.py` and `rag_chain.py`. The current default is:
 
 ```python
+# Current model (default)
 embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-mpnet-base-v2"  # Alternative model
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
+)
+
+# Alternative: More accurate but slower
+embeddings = HuggingFaceEmbeddings(
+    model_name="sentence-transformers/all-mpnet-base-v2"
 )
 ```
 
 ### Adjusting Chunk Size
 
-In `ingest.py`, modify the text splitter:
+In `ingest.py`, modify the text splitter (current defaults shown):
 
 ```python
 splitter = RecursiveCharacterTextSplitter(
-    chunk_size=500,    # Increase for more context per chunk
-    chunk_overlap=50   # Increase to maintain continuity
+    chunk_size=500,    # Current default, increase to 1000+ for more context per chunk
+    chunk_overlap=50   # Current default, increase to 100+ to maintain better continuity
 )
 ```
 
 ### Changing the Number of Retrieved Documents
 
-In `rag_chain.py`, modify the similarity search:
+In `rag_chain.py`, modify the similarity search to specify how many documents to retrieve:
 
 ```python
-docs = vector_store.similarity_search(question, k=4)  # Change k value
+# Current code uses default (k=4)
+docs = vector_store.similarity_search(question)
+
+# Customize by specifying k parameter:
+docs = vector_store.similarity_search(question, k=6)  # Retrieve more documents for more context
 ```
 
 ## 📝 License
